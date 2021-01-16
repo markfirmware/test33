@@ -1,5 +1,5 @@
 
-name: update runs issue
+name: update report.txt
 
 on:
   schedule:
