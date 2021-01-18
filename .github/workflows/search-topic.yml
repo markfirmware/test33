@@ -2,7 +2,7 @@ name: search topics
 
 on:
   schedule:
-    - cron: "0/15 * * * *"
+    - cron: "30 * * * *"
   push:
   workflow_dispatch:
 
