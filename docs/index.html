@@ -40,8 +40,10 @@
             </a>
         </div>
         <div x-data="data()" x-init="getIssue((j)=>repos=parse(j))">
-            <div x-text=repos.length>
-            </div>
+            <template x-if="repos.length != 0">
+                <div x-text="'There are ' + repos.length + ' (need pagination to get more) GitHub repositories with topic alpinejs:'">
+                </div>
+            </template>
             <template x-for="i in repos" :key="i.repo.nameWithOwner">
                 <div>
                     <a x-text="i.repo.nameWithOwner" :href="i.repo.url" class="underline">

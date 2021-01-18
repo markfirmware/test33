@@ -2,8 +2,9 @@
 
 gq https://api.github.com/graphql -H "Authorization: bearer $GITHUB_TOKEN" \
 \
--q '{
-  search(first: 100, type: REPOSITORY, query: "topic:alpinejs") {
+-v first=100 \
+-q 'query ($first: Int) {
+  search(first: $first, type: REPOSITORY, query: "topic:alpinejs") {
     pageInfo {
       hasNextPage
       endCursor
