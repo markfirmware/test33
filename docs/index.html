@@ -8,8 +8,8 @@
         <script note="data">
             function data() {
                 return {
-                    x: [],
-                    gather: function (update) {
+                    repos: [],
+                    getIssue: function (update) {
                         fetch("https://api.github.com/repos/markfirmware/test33/issues/1", {
                             headers: {
                                 "Accept": "application/vnd.github.v3+json"
@@ -22,6 +22,15 @@
                     }
                 };
             }
+            function parse(issue) {
+                var list = JSON.parse(issue.body.slice(7));
+                list.sort((a, b) => {
+                    var x = a.repo.nameWithOwner;
+                    var y = b.repo.nameWithOwner;
+                    return x == y ? 0 : x > y ? 1 : -1;
+                });
+                return list;
+            }
         </script>
     </head>
     <body class="font-mono>"
@@ -30,11 +39,15 @@
                 markfirmware/test33
             </a>
         </div>
-        <div x-data="data()" x-init="gather((j)=>x=JSON.parse(j.body.slice(7)))">
-            <div x-text=x.length>
+        <div x-data="data()" x-init="getIssue((j)=>repos=parse(j))">
+            <div x-text=repos.length>
             </div>
-            <template x-for="i in x">
-                <div x-text="i.login + '/' + i.name">
+            <template x-for="i in repos" :key="i.repo.nameWithOwner">
+                <div>
+                    <a x-text="i.repo.nameWithOwner" :href="i.repo.url" class="underline">
+                    </a>
+                    <span x-text="i.repo.description">
+                    </span>
                 </div>
             </template>
         </div>

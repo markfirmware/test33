@@ -7,7 +7,7 @@ gq https://api.github.com/graphql -H "Authorization: bearer $GITHUB_TOKEN" \
     pageInfo {
       hasNextPage
       endCursor
-      }
+    }
     repos: edges {
       repo: node {
         ... on Repository {
@@ -17,8 +17,17 @@ gq https://api.github.com/graphql -H "Authorization: bearer $GITHUB_TOKEN" \
           name
           url
           id
+          createdAt
+          description
+          forkCount
+          isTemplate
+          isFork
+          nameWithOwner
+          stargazerCount
+          updatedAt
         }
       }
     }
   }
-}' > search.json
+}
+' > search.json

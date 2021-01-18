@@ -16,7 +16,7 @@ jobs:
           PATH=./node_modules/.bin:$PATH
           npm i graphqurl >& npm-i-graphqurl.log
           ./search.sh
-          cat search.json | jq "[.data.search.repos | .[] | .repo | {login:.owner.login, name:.name}]" > report.json
+          cat search.json | jq ".data.search.repos" > report.json
           sed -i "s/^/    /" report.json
           echo search-topic.yml report > issue
           echo >> issue
@@ -25,5 +25,6 @@ jobs:
           cat report.json >> issue
           hub issue update 1 -F issue
           head issue
+          cat search.json | jq .data.search.repos[0]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
