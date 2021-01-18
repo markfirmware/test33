@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/index.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js"></script>
+        <script note="data">
+            function data() {
+                return {
+                    x: [],
+                    gather: function (update) {
+                        fetch("https://api.github.com/repos/markfirmware/test33/issues/1", {
+                            headers: {
+                                "Accept": "application/vnd.github.v3+json"
+                            }
+                        })
+                            .then((r) => r.json())
+                            .then((j) => {
+                                update(j);
+                            })
+                    }
+                };
+            }
+        </script>
+    </head>
+    <body class="font-mono>"
+        <div>
+            <a href="https://github.com/markfirmware/test33" class="underline">
+                markfirmware/test33
+            </a>
+        </div>
+        <div x-data="data()" x-init="gather((j)=>x=JSON.parse(j.body.slice(7)))">
+            <div x-text=x.length>
+            </div>
+            <template x-for="i in x">
+                <div x-text="i.login + '/' + i.name">
+                </div>
+            </template>
+        </div>
+    </body>
+</html>
