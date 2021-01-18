@@ -18,3 +18,7 @@ search github heuristically (alpine in repo name, alpine directives in html file
 search npm packages
 
 search codepen (if api permits)
+
+search discord?
+
+(gh discussions does not have an api)
