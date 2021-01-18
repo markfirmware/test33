@@ -8,6 +8,7 @@
         <script note="data">
             function data() {
                 return {
+                    when: "",
                     repos: [],
                     getIssue: function (update) {
                         fetch("https://api.github.com/repos/markfirmware/test33/issues/1", {
@@ -23,13 +24,14 @@
                 };
             }
             function parse(issue) {
-                var list = JSON.parse(issue.body.slice(7));
+                var parsed = JSON.parse(issue.body.slice(7));
+                var list = parsed.query.data.search.repos;
                 list.sort((a, b) => {
                     var x = a.repo.nameWithOwner;
                     var y = b.repo.nameWithOwner;
                     return x == y ? 0 : x > y ? 1 : -1;
                 });
-                return list;
+                return {list: list, when: parsed.when};
             }
         </script>
     </head>
@@ -39,9 +41,9 @@
                 markfirmware/test33
             </a>
         </div>
-        <div x-data="data()" x-init="getIssue((j)=>repos=parse(j))">
+        <div x-data="data()" x-init="getIssue((j)=>{var p=parse(j);repos=p.list;when=p.when;})">
             <template x-if="repos.length != 0">
-                <div x-text="'There are ' + repos.length + ' (need pagination to get more) GitHub repositories with topic alpinejs:'">
+                <div x-text="when + ' There are ' + repos.length + ' (need pagination to get more) GitHub repositories with topic alpinejs:'">
                 </div>
             </template>
             <template x-for="i in repos" :key="i.repo.nameWithOwner">

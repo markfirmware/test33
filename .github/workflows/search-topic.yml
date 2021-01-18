@@ -16,7 +16,7 @@ jobs:
           PATH=./node_modules/.bin:$PATH
           npm i graphqurl >& npm-i-graphqurl.log
           ./search.sh
-          cat search.json | jq ".data.search.repos" > report.json
+          cat search.json > report.json
           sed -i "s/^/    /" report.json
           echo search-topic.yml report > issue
           echo >> issue

@@ -31,4 +31,4 @@ gq https://api.github.com/graphql -H "Authorization: bearer $GITHUB_TOKEN" \
     }
   }
 }
-' > search.json
+' | jq "{\"when\": \"$(date)\", \"query\": .}" > search.json
