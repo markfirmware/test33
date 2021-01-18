@@ -13,6 +13,8 @@ This approach eliminates the need for the browser to require any authorization.
 
 ## Trip Plan
 
+search github heuristically (alpine in repo name, alpine directives in html files)
+
 search npm packages
 
-search codepen (if api permits)|x|
+search codepen (if api permits)
